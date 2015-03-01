@@ -36,7 +36,10 @@ class Reader
   end
 
   def read_atom(value)
-    value
+    return value if value.is_a? Array
+    return value if value.start_with?("\"")
+    return value.to_i if value.to_i.to_s == value.to_s
+    value.to_sym
   end
 
   def self.read_str(value)
