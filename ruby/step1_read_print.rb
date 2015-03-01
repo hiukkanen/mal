@@ -1,10 +1,13 @@
 require 'readline'
+require_relative 'reader'
+require_relative 'printer'
+
 def prompt
   "mal-user> "
 end
 
 def READ(value)
-  value
+  Reader.read_str(value)
 end
 
 def EVAL(value)
@@ -12,7 +15,7 @@ def EVAL(value)
 end
 
 def PRINT(value)
-  value
+  Printer.new.pr_str(value)
 end
 
 def rep(value)
