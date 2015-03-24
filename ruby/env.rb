@@ -1,9 +1,13 @@
 require_relative 'repl_exception'
 class Env
 
-  def initialize(outer = nil)
+  def initialize(outer = nil, binds = [], exprs = [])
     @outer = outer
     @map = {}
+
+    binds.zip(exprs).each do |key, value|
+      set(key, value)
+    end
   end
 
   def find(key)

@@ -1,4 +1,8 @@
 class Printer
+  def initialize(mal)
+    @mal = mal
+  end
+
   def pr_str(value)
     @presentation = ""
     @was_array = true
@@ -9,7 +13,7 @@ class Printer
   private
 
   def _pr_str(value)
-    if value.is_a? Array
+    if @mal.array?(value)
       if @was_array
         @presentation << "("
       else
@@ -20,11 +24,17 @@ class Printer
       @presentation << ")"
     else
       if @was_array
-        @presentation << "#{value}"
+        @presentation << "#{plain value}"
       else
-        @presentation << " #{value}"
+        @presentation << " #{plain value}"
       end
       @was_array = false
     end
+  end
+
+  def plain(value)
+    return "nil" if value.nil?
+    return "#<function>" if value.is_a?(Proc)
+    value
   end
 end
