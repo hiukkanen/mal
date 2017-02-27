@@ -3,6 +3,7 @@ require_relative 'reader'
 require_relative 'printer'
 require_relative 'env'
 require_relative 'repl_exception'
+require_relative 'core'
 
 class Mal
   def prompt
@@ -86,16 +87,8 @@ class Mal
   end
 
   def repl_env
-    @env ||= Env.new.tap do |env|
-      {
-        "+": -> (a, b) { a + b },
-        "-": -> (a, b) { a - b },
-        "*": -> (a, b) { a * b },
-        "/": -> (a, b) { a / b }
-      }.each do |key, value|
-        env.set(key, value)
-      end
-    end
+    core = Core.new(self)
+    @env ||= core.get
   end
 end
 
